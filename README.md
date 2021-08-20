@@ -8,3 +8,9 @@
 # やりたいこと
 https://www.restbest.jp/user/ を参考して、
 基本機能を実装します。
+
+# 参考
+### 本
+- Agile Web Development with Rails 6
+### ウェブ
+- https://railsguides.jp/
