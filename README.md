@@ -34,5 +34,6 @@ https://www.restbest.jp/user/ を参考して、
 - Agile Web Development with Rails 6
 - Effective Ruby
 - Confident Ruby
+- The Art of Readable Code: Simple and Practical Techniques for Writing Better Code *
 ### ウェブ
 - https://railsguides.jp/
