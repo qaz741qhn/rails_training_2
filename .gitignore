@@ -8,7 +8,27 @@
 !/log/.keep
 !/tmp/.keep
 
+## Environment normalization:
+/.bundle
+/vendor/bundle
+
 # Ignore node_modules
 node_modules/
+
+# Ignore precompiled javascript packs
+/public/packs
+/public/packs-test
+/public/assets
+/public/system
+
+# Ignore yarn files
+/yarn-error.log
+yarn-debug.log*
+.yarn-integrity
+
+# Ignore uploaded files in development
+/storage/*
+!/storage/.keep
+/public/uploads
 
 # End of https://www.toptal.com/developers/gitignore/api/rails
