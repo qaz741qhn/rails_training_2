@@ -1,0 +1,23 @@
+<h1><%= @user.email %>'s profile</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>User ID</th>
+      <th>User email</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><%= @user.id %></td>
+      <td><%= @user.email %></td>
+      <% if logged_in? %>
+        <% if @user == current_user %>
+          <td><%= link_to "Delete Profile", user_path(@user), method: :delete, data: { confirm: "Are you sure?" } %></td>
+        <% end %>
+      <% end %>
+    </tr>
+  </tbody>
+</table>
+
+<%= link_to 'return to home page', root_path %>

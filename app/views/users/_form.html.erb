@@ -1,0 +1,18 @@
+<%= render 'shared/errors', obj: @user %>
+
+<%= form_with(model: @user, local: true) do |f| %>
+
+<p>
+    <%= f.label :email %><br/>
+    <%= f.email_field :email, placeholder: "Enter your email address" %>
+</p>
+<p>
+    <%= f.label :password %><br/>
+    <%= f.password_field :password, placeholder: "Choose a password" %>
+</p>
+<p>
+    <%= f.submit(@user.new_record? ? "Sign up" : "Update account") %>
+</p>
+
+<% end %>
+<%= link_to 'return to home page', root_url %>
