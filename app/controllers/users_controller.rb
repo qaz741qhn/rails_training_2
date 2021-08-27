@@ -25,6 +25,13 @@ class UsersController < ApplicationController
     end
   end
 
+  def destroy
+    user = User.find(params[:id])
+    user.destroy if user == current_user
+    session[:user_id] = nil
+    redirect_to root_path
+  end
+
   private
 
   def user_params
