@@ -1,23 +1,31 @@
 <h1>All users</h1>
-<table>
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Email</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @users.each do |user| %>
-    <tr>
-      <td><%= user.id %></td>
-      <td><%= user.email %></td>
-      <td><%= link_to "View Profile", user_path(user) %></td>
-      <% if logged_in? && user == current_user %>
-        <td><%= link_to "Delete Profile", user_path(user), method: :delete, data: { confirm: "Are you sure?" } %></td>
+<div class="block">
+  <table class="profile">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Email</th>
+        <th></th>
+        <% if logged_in? %>
+          <th></th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <% @users.each do |user| %>
+      <tr>
+        <td><%= user.id %></td>
+        <td><%= user.email %></td>
+        <td><%= link_to "View Profile", user_path(user) %></td>
+        <% if logged_in? && user == current_user %>
+          <td><%= link_to "Delete Profile", user_path(user), method: :delete, data: { confirm: "Are you sure?" } %></td>
+        <% elsif logged_in? %>
+          <td></td>
+        <% end %>
+      </tr>
       <% end %>
-    </tr>
-    <% end %>
-  </tbody>
-</table>
+    </tbody>
+  </table>
 
-<%= link_to 'return to home page', root_path %>
+  <%= link_to 'return to home page', root_path, class:"return-link" %>
+</div>
