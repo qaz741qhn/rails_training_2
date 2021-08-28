@@ -1,21 +1,26 @@
 <h1><%= @user.email %>'s profile</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Email</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><%= @user.id %></td>
-      <td><%= @user.email %></td>
-      <% if logged_in? && @user == current_user %>
-        <td><%= link_to "Delete Profile", user_path(@user), method: :delete, data: { confirm: "Are you sure?" } %></td>
-      <% end %>
-    </tr>
-  </tbody>
-</table>
+<div class="block">
+  <table class="profile">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Email</th>
+        <% if logged_in? && @user == current_user %>
+          <th></th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><%= @user.id %></td>
+        <td><%= @user.email %></td>
+        <% if logged_in? && @user == current_user %>
+          <td><%= link_to "Delete Profile", user_path(@user), method: :delete, data: { confirm: "Are you sure?" } %></td>
+        <% end %>
+      </tr>
+    </tbody>
+  </table>
 
-<%= link_to 'return to home page', root_path %>
+  <%= link_to 'return to home page', root_path, class:"return-link" %>
+</div>

@@ -1,6 +1,6 @@
 <% if obj.errors.any? %> 
-<h2>The following errors prevented the <%= obj.class.name.downcase %> from being saved.</h2>
-    <ul>
+<h2 class="errors-title">The following errors prevented the <%= obj.class.name.downcase %> from being saved.</h2>
+    <ul class="list">
         <% obj.errors.full_messages.each do |msg| %>
             <li><%= msg %></li>
         <% end %>
