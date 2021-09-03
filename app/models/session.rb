@@ -1,6 +1,5 @@
 class Session < ApplicationRecord
   belongs_to :user
-  attr_accessor :remember_token
 
   def self.digest(token)
     Digest::SHA1.hexdigest(token.to_s)
@@ -11,17 +10,17 @@ class Session < ApplicationRecord
   end
 
   def remember
-    self.remember_token = Session.new_token
-    update_attribute(:remember_digest, Session.digest(remember_token))
+    token = Session.new_token
+    update_attribute(:token_digest, Session.digest(token))
   end
 
-  def authenticated?(remember_token)
-    return false if remember_digest.nil?
-    BCrypt::Password.new(remember_digest).is_password?(remember_token)
+  def authenticated?(token)
+    return false if token_digest.nil?
+    BCrypt::Password.new(token_digest).is_password?(token)
   end
 
   def forget
-    update_attribute(:remember_digest, nil)
+    update_attribute(:token_digest, nil)
   end
 
 end

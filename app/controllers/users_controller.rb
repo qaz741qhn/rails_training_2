@@ -17,10 +17,14 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      session[:user_id] = @user.id
+      @user.session.new
+      @user.session.save
+      remember @user.session
+      session[:token] = @user.session.token_digest
       flash[:notice] = "Welcome to my app #{@user.email}"
       redirect_to root_path
     else
+      flash[:alert] = "Invalid information"
       render 'new'
     end
   end
@@ -28,7 +32,7 @@ class UsersController < ApplicationController
   def destroy
     user = User.find(params[:id])
     user.destroy if user == current_user
-    session[:user_id] = nil
+    session[:token] = nil
     redirect_to root_path
   end
 
