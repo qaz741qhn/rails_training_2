@@ -4,9 +4,10 @@ class ApplicationController < ActionController::Base
   def current_user
     if (user_id = session[:user_id])
       @current_user ||= User.find(session[:user_id])
-    elsif (user_id = cookies.signed[:user_id])
+    else
       user = User.find_by(id: user_id)
-      if user && user.authenticated?(cookies[:remember_token])
+      session = user.session
+      if user && session.authenticated?(cookies[:remember_token])
         session[:user_id] = user.id
         @current_user = user
       end
@@ -17,15 +18,13 @@ class ApplicationController < ActionController::Base
     !!current_user
   end
 
-  def remember(user)
-    user.remember
-    cookies.permanent.signed[:user_id] = user.id
-    cookies.permanent[:remember_token] = user.remember_token
+  def remember(session)
+    session.remember
+    cookies.permanent[:remember_token] = session.remember_token
   end
 
-  def forget(user)
-    user.forget
-    cookies.delete(:user_id)
+  def forget(session)
+    session.forget
     cookies.delete(:remember_token)
   end
 
