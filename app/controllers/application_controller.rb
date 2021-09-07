@@ -3,10 +3,10 @@ class ApplicationController < ActionController::Base
 
   def current_user
     if session[:token]
-      @current_user ||= User.find_by(email: session[:email])
+      @current_user ||= User.find_by(session: session[:session_id])
     else
-      user = User.find_by(email: session[:email])
-      if user && session.authenticated?(cookies[:token])
+      user = User.find_by(session: session[:session_id])
+      if user && user.session.authenticated?(cookies[:token])
         session[:token] = user.session.token_digest
         @current_user = user
       end
@@ -28,13 +28,20 @@ class ApplicationController < ActionController::Base
   end
 
   def log_out
-    forget(current_user)
-    current_user = nil
+    if session[:token_digest]
+      session = current_user.session
+      forget(session)
+      current_user = nil
+      flash[:notice] = "Logged out"
+    else
+      flash[:alert] = "You are already logged out"
+    end
   end
 
   def save_to_session(user)
     session = Session.new
     session.user = user
+    session.save
   end
 
 end

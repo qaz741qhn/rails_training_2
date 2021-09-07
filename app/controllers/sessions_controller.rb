@@ -23,7 +23,6 @@ class SessionsController < ApplicationController
 
   def destroy
     log_out if logged_in?
-    flash[:notice] = "Logged out"
     redirect_to root_path
   end
 

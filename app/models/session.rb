@@ -1,17 +1,8 @@
 class Session < ApplicationRecord
   belongs_to :user
 
-  def digest(token)
-    Digest::SHA1.hexdigest(token.to_s)
-  end
-
-  def new_token
-    SecureRandom.urlsafe_base64
-  end
-
   def remember
-    token = new_token
-    token_digest = digest(token)
+    token_digest = digest(new_token)
     update_attribute(:token_digest, token_digest)
     update_attribute(:expires_at, expires_at)
   end
@@ -26,9 +17,16 @@ class Session < ApplicationRecord
 
   private
 
+  def digest(token)
+    Digest::SHA1.hexdigest(token.to_s)
+  end
+
+  def new_token
+    SecureRandom.urlsafe_base64
+  end
+
   def expires_at
-    now = Time.current
-    now.since(3.days)
+    Time.current.since(3.days)
   end
 
 end
