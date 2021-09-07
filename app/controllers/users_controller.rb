@@ -17,8 +17,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      @user.session.new
-      @user.session.save
+      save_to_session(@user)
       remember @user.session
       session[:token] = @user.session.token_digest
       flash[:notice] = "Welcome to my app #{@user.email}"

@@ -16,13 +16,13 @@ ActiveRecord::Schema.define(version: 2021_09_01_001157) do
   enable_extension "plpgsql"
 
   create_table "sessions", force: :cascade do |t|
-    t.bigint "users_id", null: false
+    t.bigint "user_id", null: false
     t.string "token_digest"
-    t.datetime "expired_at"
+    t.datetime "expires_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["token_digest"], name: "index_sessions_on_token_digest", unique: true
-    t.index ["users_id"], name: "index_sessions_on_users_id"
+    t.index ["user_id"], name: "index_sessions_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -32,5 +32,5 @@ ActiveRecord::Schema.define(version: 2021_09_01_001157) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  add_foreign_key "sessions", "users", column: "users_id"
+  add_foreign_key "sessions", "users"
 end

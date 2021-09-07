@@ -1,18 +1,18 @@
 class SessionsController < ApplicationController
 
   before_action :logged_in_redirect, only: [:new, :create]
-  before_action :logged_in? only: [:show]
+  before_action :logged_in?, only: [:show]
 
   def new
   end
 
   def create
-    user = User.find_by(email: params[:session][:email])
+    session = Session.new
+    user = current_user
     if user && user.authenticate(params[:session][:password])
-      user.session.new
-      user.session.save
+      session.user = user
       remember session
-      session[:token] = user.session.token_digest
+      session[:token] = session.token_digest
       flash[:notice] = "Logged in successfully"
       redirect_to user
     else

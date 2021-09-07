@@ -1,26 +1,34 @@
 class Session < ApplicationRecord
   belongs_to :user
 
-  def self.digest(token)
+  def digest(token)
     Digest::SHA1.hexdigest(token.to_s)
   end
 
-  def self.new_token
+  def new_token
     SecureRandom.urlsafe_base64
   end
 
   def remember
-    token = Session.new_token
-    update_attribute(:token_digest, Session.digest(token))
+    token = new_token
+    token_digest = digest(token)
+    update_attribute(:token_digest, token_digest)
+    update_attribute(:expires_at, expires_at)
   end
 
-  def authenticated?(token)
-    return false if token_digest.nil?
-    BCrypt::Password.new(token_digest).is_password?(token)
+  def authenticated?(token_digest)
+    token_digest.nil? ? false : true
   end
 
   def forget
     update_attribute(:token_digest, nil)
+  end
+
+  private
+
+  def expires_at
+    now = Time.current
+    now.since(3.days)
   end
 
 end

@@ -1,9 +1,9 @@
 class CreateSessions < ActiveRecord::Migration[6.1]
   def change
     create_table :sessions do |t|
-      t.references :users, foreign_key: true, null: false
+      t.references :user, foreign_key: true, null: false
       t.string :token_digest
-      t.datetime :expired_at
+      t.datetime :expires_at
 
       t.timestamps
     end
