@@ -20,7 +20,8 @@ class ApplicationController < ActionController::Base
   end
 
   def log_out
-    if session[:token]
+    session = Session.find_by(token_digest: cookies[:token])
+    if session
       session = current_user.session
       forget(session)
       current_user = nil

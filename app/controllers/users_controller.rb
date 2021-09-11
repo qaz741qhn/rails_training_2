@@ -19,7 +19,6 @@ class UsersController < ApplicationController
     if @user.save
       save_to_session(@user)
       remember @user.session
-      session[:token] = @user.session.token_digest
       flash[:notice] = "Welcome to my app #{@user.email}"
       redirect_to root_path
     else
@@ -31,7 +30,7 @@ class UsersController < ApplicationController
   def destroy
     user = User.find(params[:id])
     user.destroy if user == current_user
-    session[:token] = nil
+    session[:token_digest] = nil
     redirect_to root_path
   end
 
