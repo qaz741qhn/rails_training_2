@@ -2,15 +2,8 @@ class ApplicationController < ActionController::Base
   helper_method :current_user, :logged_in?
 
   def current_user
-    if session[:token]
-      @current_user ||= User.find_by(session: session[:session_id])
-    else
-      user = User.find_by(session: session[:session_id])
-      if user && user.session.authenticated?(cookies[:token])
-        session[:token] = user.session.token_digest
-        @current_user = user
-      end
-    end
+    return nil unless cookies[:token]
+    @current_user ||= Session.find_by(token_digest: cookies[:token])&.user
   end
 
   def logged_in?
@@ -24,7 +17,6 @@ class ApplicationController < ActionController::Base
 
   def forget(session)
     session.forget
-    cookies.delete(:token)
   end
 
   def log_out
@@ -41,6 +33,7 @@ class ApplicationController < ActionController::Base
   def save_to_session(user)
     session = Session.new
     session.user = user
+    cookies.permanent[:token] = session.token_digest
     session.save
   end
 

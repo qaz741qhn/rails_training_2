@@ -8,13 +8,20 @@ class SessionsController < ApplicationController
 
   def create
     session = Session.new
-    user = current_user
+    user = User.find_by(email: params[:session][:email])
     if user && user.authenticate(params[:session][:password])
-      session.user = user
-      remember session
-      session[:token] = session.token_digest
-      flash[:notice] = "Logged in successfully"
-      redirect_to user
+      if cookies[:token]
+        user = current_user if current_user
+        session.user = user
+        remember session
+        flash[:notice] = "Logged in successfully"
+        redirect_to user
+      else
+        session.user = user
+        remember session
+        flash[:notice] = "Logged in successfully"
+        redirect_to user
+      end
     else
       flash.now[:alert] = "There was something wrong with your login detail"
       render 'new'
