@@ -18,13 +18,13 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      save_to_session(@user)
-      remember @user.session
+      save_session(@user)
+      remember(@user.session)
       flash[:notice] = "Welcome to my app #{@user.email}"
-      redirect_to root_path
+      redirect_to(root_path)
     else
-      flash[:alert] = "Invalid information"
-      render 'new'
+      flash.now[:alert] = "Invalid information"
+      render('new')
     end
   end
 
@@ -32,7 +32,7 @@ class UsersController < ApplicationController
     user = User.find(params[:id])
     user.destroy if user == current_user
     session[:token_digest] = nil
-    redirect_to root_path
+    redirect_to(root_path)
   end
 
   private
@@ -44,14 +44,14 @@ class UsersController < ApplicationController
   def signed_up_redirect
     if current_user
       flash[:notice] = "You are already signed up"
-      redirect_to root_path
+      redirect_to(root_path)
     end
   end
 
   def auth_user
     unless params[:id].to_s == current_user.id.to_s
       flash[:alert] = "You can only access your own page"
-      redirect_to root_path
+      redirect_to(root_path)
     end
   end
 

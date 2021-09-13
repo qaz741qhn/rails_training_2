@@ -19,19 +19,17 @@ class ApplicationController < ActionController::Base
     session.forget
   end
 
-  def log_out
+  def log_out!
     session = Session.find_by(token_digest: cookies[:token])
     if session
-      session = current_user.session
-      forget(session)
-      current_user = nil
+      forget(current_user.session)
       flash[:notice] = "Logged out"
     else
       flash[:alert] = "You are already logged out"
     end
   end
 
-  def save_to_session(user)
+  def save_session(user)
     session = Session.new
     session.user = user
     cookies.permanent[:token] = session.token_digest
