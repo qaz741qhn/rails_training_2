@@ -1,7 +1,7 @@
 class Session < ApplicationRecord
   belongs_to :user
 
-  def remember
+  def remember!
     token_digest = digest(new_token)
     update_attribute(:token_digest, token_digest)
     update_attribute(:expires_at, expires_at)
@@ -11,7 +11,7 @@ class Session < ApplicationRecord
     token_digest.nil? ? false : true
   end
 
-  def forget
+  def forget!
     update_attribute(:token_digest, nil)
   end
 

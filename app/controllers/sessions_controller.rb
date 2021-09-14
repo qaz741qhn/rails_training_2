@@ -10,7 +10,6 @@ class SessionsController < ApplicationController
     session = Session.new
     user = User.find_by(email: params[:session][:email])
     if user && user.authenticate(params[:session][:password])
-      user = current_user if current_user
       session.user = user
       remember(session)
       flash[:notice] = "Logged in successfully"

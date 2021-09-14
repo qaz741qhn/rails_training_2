@@ -11,12 +11,12 @@ class ApplicationController < ActionController::Base
   end
 
   def remember(session)
-    session.remember
-    cookies.permanent[:token] = session.token_digest
+    session.remember!
+    cookies[:token] = { value: session.token_digest, expires: 3.days.from_now }
   end
 
   def forget(session)
-    session.forget
+    session.forget!
   end
 
   def log_out!
@@ -32,7 +32,6 @@ class ApplicationController < ActionController::Base
   def save_session(user)
     session = Session.new
     session.user = user
-    cookies.permanent[:token] = session.token_digest
     session.save
   end
 
