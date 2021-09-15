@@ -2,8 +2,11 @@ class ApplicationController < ActionController::Base
   helper_method :current_user, :logged_in?
 
   def current_user
-    return nil unless cookies[:token]
-    @current_user ||= Session.find_by(token_digest: cookies[:token])&.user
+    return @current_user if defined? @current_user
+    return @current_user = nil unless cookies[:token]
+    session = Session.find_by(token_digest: cookies[:token])
+    return @current_user = nil if session.blank? || session.expires_at?.to_s < Time.current.to_s
+    @current_user = session.user
   end
 
   def logged_in?

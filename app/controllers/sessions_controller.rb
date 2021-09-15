@@ -7,10 +7,9 @@ class SessionsController < ApplicationController
   end
 
   def create
-    session = Session.new
     user = User.find_by(email: params[:session][:email])
+    session = User.find_by(email: params[:session][:email])&.session
     if user && user.authenticate(params[:session][:password])
-      session.user = user
       remember(session)
       flash[:notice] = "Logged in successfully"
       redirect_to(user)
