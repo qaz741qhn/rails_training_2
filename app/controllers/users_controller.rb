@@ -19,7 +19,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       save_session(@user)
-      remember(@user.session)
+      remember!(@user.session)
       flash[:notice] = "Welcome to my app #{@user.email}"
       redirect_to(root_path)
     else
