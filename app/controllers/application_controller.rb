@@ -13,12 +13,12 @@ class ApplicationController < ActionController::Base
     !!current_user
   end
 
-  def remember(session)
+  def remember!(session)
     session.remember!
     cookies[:token] = { value: session.token_digest, expires: 3.days.from_now }
   end
 
-  def forget(session)
+  def forget!(session)
     session.forget!
   end
 
