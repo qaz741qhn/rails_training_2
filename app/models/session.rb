@@ -4,7 +4,7 @@ class Session < ApplicationRecord
   def remember!
     token_digest = digest(new_token)
     update_attribute(:token_digest, token_digest)
-    update_attribute(:expires_at, expires_at)
+    update_attribute(:expires_at, expires_after)
   end
 
   def authenticated?(token_digest)
@@ -25,7 +25,7 @@ class Session < ApplicationRecord
     SecureRandom.urlsafe_base64
   end
 
-  def expires_at
+  def expires_after
     Time.current.since(3.days)
   end
 

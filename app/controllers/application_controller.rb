@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
     return @current_user if defined? @current_user
     return @current_user = nil unless cookies[:token]
     session = Session.find_by(token_digest: cookies[:token])
-    return @current_user = nil if session.blank? || session.expires_at?.to_s < Time.current.to_s
+    return @current_user = nil if session.blank? || session.expires_at < Time.current
     @current_user = session.user
   end
 
