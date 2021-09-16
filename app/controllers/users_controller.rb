@@ -49,9 +49,13 @@ class UsersController < ApplicationController
   end
 
   def auth_user
-    unless params[:id].to_s == current_user.id.to_s
-      flash[:alert] = "You can only access your own page"
-      redirect_to(root_path)
+    if current_user
+      unless params[:id].to_s == current_user.id.to_s
+        flash[:alert] = "You can only access your own page"
+        redirect_to(root_path)
+      end
+    else
+      redirect_to(login_path)
     end
   end
 
