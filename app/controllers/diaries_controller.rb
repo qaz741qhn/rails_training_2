@@ -6,7 +6,7 @@ class DiariesController < ApplicationController
   before_action :auth_user, only: [:show]
 
   def index
-    @diaries = Diary.all
+    @diaries = current_user.diaries.all
   end
 
   def new
