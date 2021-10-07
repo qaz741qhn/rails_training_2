@@ -10,6 +10,7 @@
         <th>Article</th>
         <% if logged_in? && current_user %>
           <th></th>
+          <th></th>
         <% end %>
       </tr>
     </thead>
@@ -20,7 +21,8 @@
         <td><%= @diary.title %></td>
         <td><%= @diary.article %></td>
         <% if logged_in? && @user == current_user %>
-          <td><%= link_to "Delete Diary", diary_path(@diary), method: :delete, data: { confirm: "Are you sure?" } %></td>
+          <td><%= link_to "Edit", edit_diary_path(@diary) %></td>
+          <td><%= link_to "Delete", diary_path(@diary), method: :delete, data: { confirm: "Are you sure?" } %></td>
         <% end %>
       </tr>
     </tbody>

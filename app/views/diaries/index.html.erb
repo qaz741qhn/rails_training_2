@@ -21,9 +21,9 @@
         <td><%= diary.date %></td>
         <td><%= diary.title %></td>
         <% if logged_in? && user == current_user %>
-          <td><%= link_to "View Diary", diary_path(diary) %></td>
-          <td><%= link_to "Edit Diary", edit_diary_path(diary) %></td>
-          <td><%= link_to "Delete Diary", diary_path(diary), method: :delete, data: { confirm: "Are you sure?" } %></td>
+          <td><%= link_to "View", diary_path(diary) %></td>
+          <td><%= link_to "Edit", edit_diary_path(diary) %></td>
+          <td><%= link_to "Delete", diary_path(diary), method: :delete, data: { confirm: "Are you sure?" } %></td>
         <% elsif logged_in? %>
           <td></td>
           <td></td>
