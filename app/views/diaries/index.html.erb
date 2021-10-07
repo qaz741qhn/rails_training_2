@@ -1,0 +1,38 @@
+<h1>All diaries</h1>
+<div class="block">
+  <table class="profile">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Date</th>
+        <th>Title</th>
+        <% if logged_in? && current_user %>
+          <th></th>
+          <th></th>
+          <th></th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <% @diaries.each do |diary| %>
+      <% user = User.find(diary.user_id) %>
+      <tr>
+        <td><%= diary.id %></td>
+        <td><%= diary.date %></td>
+        <td><%= diary.title %></td>
+        <% if logged_in? && user == current_user %>
+          <td><%= link_to "View", diary_path(diary) %></td>
+          <td><%= link_to "Edit", edit_diary_path(diary) %></td>
+          <td><%= link_to "Delete", diary_path(diary), method: :delete, data: { confirm: "Are you sure?" } %></td>
+        <% elsif logged_in? %>
+          <td></td>
+          <td></td>
+        <% end %>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <p><%= link_to 'new diary', new_diary_path, class:"return-link" %></p>
+  <%= link_to 'return to home page', root_path, class:"return-link" %>
+</div>

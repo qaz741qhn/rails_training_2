@@ -1,0 +1,25 @@
+<div class="block">
+
+  <%= render 'shared/errors', obj: @diary %>
+
+  <%= form_with(model: @diary, local: true) do |f| %>
+
+  <p>
+      <%= f.label :date %><br/>
+      <%= f.date_field :date %>
+  </p>
+  <p>
+      <%= f.label :title %><br/>
+      <%= f.text_field :title, rows: 10, cols: 60, placeholder: "Enter your title" %>
+  </p>
+  <p>
+      <%= f.label :article %><br/>
+      <%= f.text_area :article, placeholder: "Write your diary" %>
+  </p>
+  <p>
+      <%= f.submit(@diary.new_record? ? "Create diary" : "Update diary") %>
+  </p>
+
+  <% end %>
+  <%= link_to 'return to all diaries', diaries_url, class:"return-link" %>
+</div>
