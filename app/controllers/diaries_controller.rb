@@ -2,6 +2,7 @@ class DiariesController < ApplicationController
 
   before_action :logged_in?, only: [:new, :show, :edit]
   before_action :set_diary, only:[:show, :edit, :update, :destroy]
+  before_action :set_user, only:[:show, :destroy]
   before_action :auth_user, only: [:show]
 
   def index
@@ -13,7 +14,6 @@ class DiariesController < ApplicationController
   end
 
   def show
-    @user = User.find(@diary.user_id)
   end
 
   def create
@@ -41,8 +41,7 @@ class DiariesController < ApplicationController
   end
 
   def destroy
-    user = User.find(@diary.user_id)
-    if user == current_user
+    if @user == current_user
       @diary.destroy
       redirect_to(diaries_path)
     else
@@ -56,6 +55,10 @@ class DiariesController < ApplicationController
     @diary = Diary.find(params[:id])
   end
 
+  def set_user
+    @user = User.find(@diary.user_id)
+  end
+
   def diary_params
     params.require(:diary).permit(:title, :article, :date, :user_id)
   end
@@ -63,8 +66,7 @@ class DiariesController < ApplicationController
   def auth_user
     if current_user
       diary = Diary.find(params[:id])
-      user = User.find(diary.user_id)
-      unless user.id.to_s == current_user.id.to_s
+      unless diary.user_id.to_s == current_user.id.to_s
         flash[:alert] = "You can only access your own diary"
         redirect_to(diaries_path)
       end
