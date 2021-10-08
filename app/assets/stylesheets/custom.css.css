@@ -97,3 +97,24 @@ ul.list {
   font-family: 'Helvetica Neue' !important;
   list-style-type: circle;
 }
+
+.button {
+  background-color: #008CBA;
+  /* Green */
+  border: none;
+  color: white;
+  padding: 15px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.right {
+  position: absolute;
+  right: 0px;
+}

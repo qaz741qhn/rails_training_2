@@ -1,0 +1,12 @@
+<h1><%= @diary.date %></h1>
+
+<div class="block">
+  <h2><%= @diary.title %></h2>
+  <p><%= @diary.article %></p>
+  <span class="inline-block"><%= link_to "Edit", edit_diary_path(@diary), class:"button" %></span>
+  <span lass="inline-block"><%= link_to "Delete", diary_path(@diary), method: :delete, data: { confirm: "Are you sure?" }, class:"button" %></span>
+  <div class="right">
+    <p><%= link_to 'new diary', new_diary_path, class:"return-link" %></p>
+    <%= link_to 'return to all diaries', diaries_path, class:"return-link" %>
+  </div>
+</div>
