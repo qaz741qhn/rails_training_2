@@ -1,12 +1,10 @@
 class DiariesController < ApplicationController
 
-  before_action :logged_in?, only: [:new, :show, :edit]
-  before_action :set_diary, only:[:show, :edit, :update, :destroy]
-  before_action :set_user, only:[:show, :destroy]
-  before_action :auth_user, only: [:show]
+  before_action :login_redirect, only:[:index, :new, :create]
+  before_action :set_diary, :auth_user, only:[:show, :edit, :update, :destroy]
 
   def index
-    @diaries = current_user.diaries.all
+    @diaries = current_user.diaries.order(:date)
   end
 
   def new
@@ -41,32 +39,27 @@ class DiariesController < ApplicationController
   end
 
   def destroy
-    if @user == current_user
-      @diary.destroy
-      redirect_to(diaries_path)
-    else
-      flash.now[:alert] = "You can only delete your own diary"
-    end
+    @diary.destroy
+    redirect_to(diaries_path)
   end
 
   private
-
-  def set_diary
-    @diary = Diary.find(params[:id])
-  end
-
-  def set_user
-    @user = User.find(@diary.user_id)
-  end
 
   def diary_params
     params.require(:diary).permit(:title, :article, :date, :user_id)
   end
 
+  def login_redirect
+    redirect_to(login_path) if current_user.nil?
+  end
+
+  def set_diary
+    @diary = Diary.find(params[:id])
+  end
+
   def auth_user
     if current_user
-      diary = Diary.find(params[:id])
-      unless diary.user_id.to_s == current_user.id.to_s
+      unless @diary.user_id.to_s == current_user.id.to_s
         flash[:alert] = "You can only access your own diary"
         redirect_to(diaries_path)
       end
