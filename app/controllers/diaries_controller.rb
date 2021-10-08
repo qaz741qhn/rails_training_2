@@ -1,7 +1,7 @@
 class DiariesController < ApplicationController
 
   before_action :login_redirect, only:[:index, :new, :create]
-  before_action :set_diary, :auth_user, only:[:show, :edit, :update, :destroy]
+  before_action :auth_user, only:[:show, :edit, :update, :destroy]
 
   def index
     @diaries = current_user.diaries.order(:date)
@@ -45,28 +45,24 @@ class DiariesController < ApplicationController
 
   private
 
-  def set_diary
-    @diary = Diary.find(params[:id])
-  end
-
   def diary_params
     params.require(:diary).permit(:title, :article, :date, :user_id)
   end
 
+  def login_redirect
+    redirect_to(login_path) if current_user.nil?
+  end
+
   def auth_user
+    @diary = Diary.find(params[:id])
     if current_user
-      diary = Diary.find(params[:id])
-      unless diary.user_id.to_s == current_user.id.to_s
+      unless @diary.user_id.to_s == current_user.id.to_s
         flash[:alert] = "You can only access your own diary"
         redirect_to(diaries_path)
       end
     else
       redirect_to(login_path)
     end
-  end
-
-  def login_redirect
-    redirect_to(login_path) if current_user.nil?
   end
 
 end
