@@ -3,7 +3,7 @@ class DiariesController < ApplicationController
   before_action :logged_in?, only: [:new, :show, :edit]
   before_action :set_diary, only:[:show, :edit, :update, :destroy]
   before_action :set_user, only:[:show, :destroy]
-  before_action :auth_user, only: [:show]
+  before_action :auth_user, only: [:show, :edit]
 
   def index
     @diaries = current_user.diaries.all
