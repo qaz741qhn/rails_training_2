@@ -1,9 +1,8 @@
 class DiariesController < ApplicationController
 
-  before_action :logged_in?, only: [:new, :show, :edit]
+  before_action :login_redirect, only:[:index, :new]
   before_action :set_diary, only:[:show, :edit, :update, :destroy]
-  before_action :set_user, only:[:show, :destroy]
-  before_action :auth_user, only: [:show, :edit]
+  before_action :auth_user, only:[:show, :create, :edit, :update, :destroy]
 
   def index
     @diaries = current_user.diaries.all
@@ -41,12 +40,8 @@ class DiariesController < ApplicationController
   end
 
   def destroy
-    if @user == current_user
-      @diary.destroy
-      redirect_to(diaries_path)
-    else
-      flash.now[:alert] = "You can only delete your own diary"
-    end
+    @diary.destroy
+    redirect_to(diaries_path)
   end
 
   private
@@ -73,6 +68,10 @@ class DiariesController < ApplicationController
     else
       redirect_to(login_path)
     end
+  end
+
+  def login_redirect
+    redirect_to(login_path) if current_user.nil?
   end
 
 end
