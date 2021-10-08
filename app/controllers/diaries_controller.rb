@@ -1,11 +1,10 @@
 class DiariesController < ApplicationController
 
-  before_action :login_redirect, only:[:index, :new]
-  before_action :set_diary, only:[:show, :edit, :update, :destroy]
-  before_action :auth_user, only:[:show, :create, :edit, :update, :destroy]
+  before_action :login_redirect, only:[:index, :new, :create]
+  before_action :set_diary, :auth_user, only:[:show, :edit, :update, :destroy]
 
   def index
-    @diaries = current_user.diaries.all
+    @diaries = current_user.diaries.order(:date)
   end
 
   def new
