@@ -50,10 +50,6 @@ class DiariesController < ApplicationController
     @diary = Diary.find(params[:id])
   end
 
-  def set_user
-    @user = User.find(@diary.user_id)
-  end
-
   def diary_params
     params.require(:diary).permit(:title, :article, :date, :user_id)
   end
