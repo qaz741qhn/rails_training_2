@@ -59,8 +59,7 @@ class DiariesController < ApplicationController
 
   def auth_user
     if current_user
-      diary = Diary.find(params[:id])
-      unless diary.user_id.to_s == current_user.id.to_s
+      unless @diary.user_id.to_s == current_user.id.to_s
         flash[:alert] = "You can only access your own diary"
         redirect_to(diaries_path)
       end
