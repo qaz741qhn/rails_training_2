@@ -1,6 +1,7 @@
 <h1><%= @user.email %>'s profile</h1>
 
 <div class="block">
+<h2>Daily Login Streak: <%= @user.session.login_streak %></h2>
   <table class="profile">
     <thead>
       <tr>
