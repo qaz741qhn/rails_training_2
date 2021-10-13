@@ -17,7 +17,7 @@ class Session < ApplicationRecord
   end
 
   def login_streak_count
-    last_login = self.created_at.to_date
+    last_login = self.updated_at.to_date
     yesterday = Time.now.yesterday.to_date
     streak_count = 0
     streak_count += 1 if last_login == yesterday
