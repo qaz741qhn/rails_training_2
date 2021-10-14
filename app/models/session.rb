@@ -1,6 +1,6 @@
 class Session < ApplicationRecord
   belongs_to :user
-  after_update :login_streak_count
+  before_update :login_streak_count
 
   def remember!
     token_digest = digest(new_token)
