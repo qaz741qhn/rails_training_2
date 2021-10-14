@@ -1,6 +1,6 @@
 class Session < ApplicationRecord
   belongs_to :user
-  after_create :login_streak_count
+  after_update :login_streak_count
 
   def remember!
     token_digest = digest(new_token)
@@ -18,10 +18,14 @@ class Session < ApplicationRecord
 
   def login_streak_count
     last_login = self.updated_at.to_date
-    yesterday = Time.now.yesterday.to_date
-    streak_count = 0
-    streak_count += 1 if last_login == yesterday
-    update_attribute(:login_streak, streak_count)
+    time_since_log_in = Time.now.to_date - last_login
+    if time_since_log_in.between?(1.day, 2.day)
+      self.login_streak += 1
+    elsif time_since_log_in > 2.day
+      self.login_streak = 1
+    else
+      self.login_streak = 1
+    end
   end
 
   private
