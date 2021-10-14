@@ -21,8 +21,6 @@ class Session < ApplicationRecord
     time_since_log_in = Time.now.to_date - last_login
     if time_since_log_in.between?(1.day, 2.day)
       self.login_streak += 1
-    elsif time_since_log_in > 2.day
-      self.login_streak = 1
     else
       self.login_streak = 1
     end
