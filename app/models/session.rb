@@ -17,8 +17,7 @@ class Session < ApplicationRecord
   end
 
   def login_streak_count
-    last_time_login = self.updated_at
-    if last_time_login.between?(Date.yesterday.beginning_of_day, Date.yesterday.end_of_day)
+    if self.updated_at.between?(Date.yesterday.beginning_of_day, Date.yesterday.end_of_day)
       self.login_streak += 1
     else
       self.login_streak = 1
