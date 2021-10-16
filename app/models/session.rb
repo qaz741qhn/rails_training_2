@@ -17,8 +17,11 @@ class Session < ApplicationRecord
   end
 
   def login_streak_count
-    if self.updated_at.between?(Date.yesterday.beginning_of_day, Date.yesterday.end_of_day)
+    if self.updated_at.between?(1.day.ago.beginning_of_day, 1.day.ago.end_of_day)
       self.login_streak += 1
+    elsif self.login_streak > 1 && self.updated_at.today?
+      #已完成連續登入，但今天登入一次以上，因此當天的連續登入次數不增加
+      pass
     else
       self.login_streak = 1
     end
