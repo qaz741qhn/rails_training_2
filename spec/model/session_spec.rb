@@ -13,11 +13,6 @@ RSpec.describe 'Session', type: :model do
     end
 
     context 'login streak' do
-      it 'streak valid' do
-        session.save
-        expect(session.login_streak).to eq 1
-      end
-
       it 'streak increase' do
         session.created_at = Time.parse('2021-10-15')
         session.updated_at = Time.parse('2021-10-16')
