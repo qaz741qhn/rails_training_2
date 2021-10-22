@@ -10,6 +10,7 @@ class SessionsController < ApplicationController
     user = User.find_by(email: params[:session][:email])
     session = user&.session
     if user && user.authenticate(params[:session][:password])
+      streak_count!(session) if session.update(session_params)
       remember!(session)
       flash[:notice] = "Logged in successfully"
       redirect_to(user)
@@ -31,6 +32,10 @@ class SessionsController < ApplicationController
       flash[:notice] = "You are already logged in"
       redirect_to(root_path)
     end
+  end
+
+  def session_params
+    params.require(:session).permit(:updated_at)
   end
 
 end

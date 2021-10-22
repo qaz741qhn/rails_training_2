@@ -38,4 +38,8 @@ class ApplicationController < ActionController::Base
     session.save
   end
 
+  def streak_count!(session)
+    session.login_streak_count!
+  end
+
 end
