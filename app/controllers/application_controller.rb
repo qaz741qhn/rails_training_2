@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  helper_method :current_user, :logged_in?
+  helper_method :current_user, :logged_in?, :login_streak_display
 
   def current_user
     return @current_user if defined? @current_user
@@ -38,8 +38,10 @@ class ApplicationController < ActionController::Base
     session.save
   end
 
-  def streak_count!(session)
-    session.login_streak_count!(session.login_streak)
+  def login_streak_display
+    current_user.login_streak_count!
+    @login_streak_display = current_user.session.login_streak
+    return @login_streak_display if defined? @login_streak_display
   end
 
 end

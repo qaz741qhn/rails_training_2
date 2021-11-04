@@ -1,7 +1,11 @@
 <h1><%= @user.email %>'s profile</h1>
 
 <div class="block">
-<h2>Daily Login Streak: <%= @user.session.login_streak %></h2>
+<h2>Daily Login Streak:
+  <% if @user == current_user && @user.session.login_streak %>
+    <%= login_streak_display %>
+  <% end %>
+</h2>
   <table class="profile">
     <thead>
       <tr>

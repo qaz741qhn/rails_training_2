@@ -15,14 +15,6 @@ class Session < ApplicationRecord
     update_attribute(:token_digest, nil)
   end
 
-  def login_streak_count!(login_streak)
-    if self.updated_at.between?(1.day.ago.beginning_of_day, 1.day.ago.end_of_day)
-      login_streak += 1
-    elsif self.updated_at <= 2.days.ago.end_of_day || self.updated_at.to_date == self.created_at.to_date
-      login_streak = 1
-    end
-  end
-
   private
 
   def digest(token)
