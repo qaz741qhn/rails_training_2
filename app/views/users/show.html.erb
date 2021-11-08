@@ -3,7 +3,7 @@
 <div class="block">
 <h2>Daily Login Streak:
   <% if @user == current_user && @user.session.login_streak %>
-    <%= login_streak_display %>
+    <%= @user.session.login_streak %>
   <% end %>
 </h2>
   <table class="profile">

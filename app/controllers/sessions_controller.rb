@@ -1,7 +1,7 @@
 class SessionsController < ApplicationController
 
   before_action :logged_in_redirect, only: [:new, :create]
-  before_action :logged_in?, only: [:show]
+  before_action :logged_in?, :login_streak_display, only: [:show]
 
   def new
   end

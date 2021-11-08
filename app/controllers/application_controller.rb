@@ -40,8 +40,6 @@ class ApplicationController < ActionController::Base
 
   def login_streak_display
     current_user.login_streak_count!
-    @login_streak_display = current_user.session.login_streak
-    return @login_streak_display if defined? @login_streak_display
   end
 
 end
