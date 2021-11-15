@@ -2,8 +2,8 @@
 
 <div class="block">
 <h2>Daily Login Streak:
-  <% if @user == current_user && @user.session.login_streak %>
-    <%= @user.session.login_streak %>
+  <% if @user == current_user && @user.login_streak %>
+    <%= @user.login_streak %>
   <% end %>
 </h2>
   <table class="profile">
