@@ -9,7 +9,7 @@ class User < ApplicationRecord
   def login_streak_count!
     if self.session.updated_at >= Time.current - 1.day
       self.login_streak += 1
-    elsif self.session.updated_at <= Time.current - 2.days.ago || self.session.updated_at.to_date == self.session.created_at.to_date
+    elsif self.session.updated_at < Time.current - 1.day.ago || self.session.updated_at.to_date == self.session.created_at.to_date
       self.login_streak = 1
     end
     self.save
