@@ -14,9 +14,9 @@ RSpec.describe 'Session', type: :model do
 
     context 'login streak' do
       before do
-        session.created_at = 2.day.ago
+        session.created_at = 1.day.ago
         session.login_streak = 1
-        session.updated_at = 1.day.ago
+        session.updated_at = Time.current
         session.user.login_streak_count!
       end
       it 'streak increase' do
