@@ -7,9 +7,9 @@ class User < ApplicationRecord
   has_secure_password
 
   def login_streak_count!
-    if self.session.updated_at >= Time.current - 1.day
+    if self.updated_at >= Time.current - 1.day
       self.login_streak += 1
-    elsif self.session.updated_at < Time.current - 1.day || self.session.updated_at.to_date == self.session.created_at.to_date
+    elsif self.updated_at < Time.current - 1.day || self.updated_at.to_date == self.created_at.to_date
       self.login_streak = 1
     end
     self.save
