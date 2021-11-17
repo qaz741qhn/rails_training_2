@@ -16,7 +16,7 @@ class User < ApplicationRecord
   end
 
   def daily_login_count!
-    if self.updated_at.between?(Time.now.beginning_of_month.to_date, 1.day.ago)
+    if self.updated_at.between?(Time.now.beginning_of_month.to_date, 1.day.ago.end_of_day)
       self.daily_logins += 1
     end
     self.save
