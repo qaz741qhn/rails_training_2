@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_15_071132) do
+ActiveRecord::Schema.define(version: 2021_11_17_104043) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(version: 2021_11_15_071132) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "login_streak"
+    t.integer "daily_logins"
   end
 
   add_foreign_key "diaries", "users", on_delete: :cascade

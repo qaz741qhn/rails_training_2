@@ -6,6 +6,11 @@
     <%= @user.login_streak %>
   <% end %>
 </h2>
+<h2>Monthly Logins:
+  <% if @user == current_user && @user.daily_logins %>
+    <%= @user.daily_logins %>
+  <% end %>
+</h2>
   <table class="profile">
     <thead>
       <tr>
