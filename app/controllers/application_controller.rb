@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  helper_method :current_user, :logged_in?, :login_streak_display, :monthly_logins_display
+  helper_method :current_user, :logged_in?, :login_streak_display, :daily_logins_display
 
   def current_user
     return @current_user if defined? @current_user
