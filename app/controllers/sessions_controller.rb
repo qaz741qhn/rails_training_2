@@ -10,6 +10,8 @@ class SessionsController < ApplicationController
     user = User.find_by(email: params[:session][:email])
     session = user&.session
     if user && user.authenticate(params[:session][:password])
+      login_streak_display(user)
+      daily_logins_display(user)
       remember!(session)
       flash[:notice] = "Logged in successfully"
       redirect_to(user)

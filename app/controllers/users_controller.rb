@@ -17,6 +17,8 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
+    @user.login_streak = 1
+    @user.daily_logins = 1
     if @user.save
       save_session(@user)
       remember!(@user.session)
